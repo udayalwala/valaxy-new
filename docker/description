@@ -1,0 +1,27 @@
+playbook2 is to create a docker image from the docker file and war file, tag that image and push that image to the docker hub and remove that image from the ansible server (alll these are done in local server only)
+
+note ssh connectivity between ansadmin in localserver and also localhost to do these
+
+ssh-copy-id localhost
+
+playbook3 is to pull the image from the docker hub, create container from that image on the target server
+
+commands:
+
+ansible-playbook -i /opt/ansible/localhost /opt/docker/playbook2.yml
+
+ansible-playbook -i /opt/docker/hosts /opt/docker/playbook3.yml
+
+note: create two hosts file
+one for localhost (ansible to perform all tasks in localhost) and one for target hosts( for deploying code into target servers)
+
+create an ansadmin user in ansible server..these user is added to the group docker so that ansible able to create docker images
+
+create a directory for workspace of docker images lets create it on /opt/docker you can create anywhere
+
+change ownership to ansadmin
+
+chown -R ansadmin:ansadmin /opt/docker
+
+
+

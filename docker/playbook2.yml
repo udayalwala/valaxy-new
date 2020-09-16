@@ -1,0 +1,19 @@
+---
+ - name: jenkins job to deploy on docker container through docker hub
+   hosts: all
+   tasks:
+    - name: create docker image 
+      command: docker build -t simple-image .
+      args:
+       chdir: /opt/docker
+    - name: create tag to that image
+      command: docker tag simple-image udaimoto/simple-image
+       
+    - name: push image into docker hub
+      command: docker push udaimoto/simple-image
+    
+    - name: remove the image from ansible server
+      command: docker rmi simple-image udaimoto/simple-image
+
+
+

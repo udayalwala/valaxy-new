@@ -1,0 +1,17 @@
+---
+ - name: pulling the image from docker hub
+   hosts: all
+   tasks:
+    - name: stop the running containers
+      command: docker stop simple-container
+      ignore_errors: yes
+    - name: delete the stopped container
+      command: docker rm simple-container
+      ignore_errors: yes
+    - name: delete docker image
+      command: docker rmi simple-image
+      ignore_errors: yes
+    - name: pull the docker image
+      command: docker pull udaimoto/simple-image:latest
+    - name: create container from the image
+      command: docker run -d --name simple-container -p 8080:8080 udaimoto/simple-image:latest

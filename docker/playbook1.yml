@@ -1,0 +1,20 @@
+---
+ - name: creating docker image
+   hosts: all
+   tasks:
+    - name: stop existing containers
+      command: docker stop simple-container
+      ignore_errors: yes
+    - name: delete the stopped containers
+      command: docker rm simple-container
+      ignore_errors: yes
+    - name: delete existing images
+      command: docker rmi simple-image
+      ignore_errors: yes
+
+    - name: build docker image using war file
+      command: docker build -t simple-image .
+      args:
+       chdir: /opt/docker
+    - name: create container using above image
+      command: docker run -d --name simple-container -p 8080:8080 simple-image
